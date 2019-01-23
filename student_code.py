@@ -25,6 +25,17 @@ class KnowledgeBase(object):
         """
         print("Asserting {!r}".format(fact))
         
+        if not isinstance(fact, Fact): 
+            print("Argument must be a fact!")
+            return
+       
+        if fact in self.facts:
+            print("Fact already in knowledgebase!")
+            return
+
+        self.facts.append(fact)
+
+
     def kb_ask(self, fact):
         """Ask if a fact is in the KB
 
@@ -35,3 +46,11 @@ class KnowledgeBase(object):
             ListOfBindings|False - ListOfBindings if result found, False otherwise
         """
         print("Asking {!r}".format(fact))
+
+        answer = ListOfBindings()
+        
+        for curr_fact in self.facts:
+            matches = match(curr_fact.statement, fact.statement)
+            if matches:
+                answer.add_bindings(matches)
+        return answer
