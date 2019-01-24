@@ -23,14 +23,13 @@ class KnowledgeBase(object):
         Args:
             fact (Fact or Rule): Fact or Rule we're asserting in the format produced by read.py
         """
-        print("Asserting {!r}".format(fact))
+        #print("Asserting {!r}".format(fact))
         
         if not isinstance(fact, Fact): 
             print("Argument must be a fact!")
             return
        
         if fact in self.facts:
-            print("Fact already in knowledgebase!")
             return
 
         self.facts.append(fact)
@@ -53,4 +52,4 @@ class KnowledgeBase(object):
             matches = match(curr_fact.statement, fact.statement)
             if matches:
                 answer.add_bindings(matches)
-        return answer
+        return answer if answer.list_of_bindings != [] else False
